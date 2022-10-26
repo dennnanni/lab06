@@ -1,6 +1,8 @@
 package it.unibo.collections;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -84,7 +86,7 @@ public final class UseListsAndMaps {
 
         System.out.println("LinkedList:");
         readingBenchmark(linkedList); 
-        
+
 
         /*
          * 7) Build a new Map that associates to each continent's name its
@@ -102,9 +104,24 @@ public final class UseListsAndMaps {
          *
          * Oceania -> 38,304,000
          */
+
+        Map<String, Long> continents = new HashMap<>();
+        continents.put("Africa", 1_110_635_000L);
+        continents.put("Americas", 972_005_000L);
+        continents.put("Antarctica", 0L);
+        continents.put("Asia", 4_298_723_000L);
+        continents.put("Europe", 742_452_000L);
+        continents.put("Oceania", 38_304_000L);
         /*
          * 8) Compute the population of the world
          */
+        long worldPopulation = 0;
+        final Collection<Long> values = continents.values();
+        for (Long value : values) {
+            worldPopulation += value;
+        }
+
+        System.out.println("World population is aproximately " + worldPopulation);
     }
 
     private static void insertionBenchmark(List<Integer> ls) {
