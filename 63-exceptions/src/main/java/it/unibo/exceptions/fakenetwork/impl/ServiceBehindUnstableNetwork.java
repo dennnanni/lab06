@@ -1,5 +1,6 @@
 package it.unibo.exceptions.fakenetwork.impl;
 
+import it.unibo.exceptions.NetworkException;
 import it.unibo.exceptions.arithmetic.ArithmeticService;
 import it.unibo.exceptions.fakenetwork.api.NetworkComponent;
 
@@ -29,7 +30,10 @@ public final class ServiceBehindUnstableNetwork implements NetworkComponent {
         /*
          * The probability should be in [0, 1[!
          */
-        if (failProbability < 0 || failProbability > 1) {
+
+         System.out.println("Son qui: " + failProbability);
+        
+        if (failProbability < 0 || failProbability >= 1) {
             throw new IllegalArgumentException("Field \"failProbability\" is out of range.");
         }
         
@@ -68,6 +72,7 @@ public final class ServiceBehindUnstableNetwork implements NetworkComponent {
              *
              * The previous exceptions must be set as the cause of the new exception
              */
+            throw new IllegalStateException(message);
         }
     }
 
@@ -83,7 +88,7 @@ public final class ServiceBehindUnstableNetwork implements NetworkComponent {
 
     private void accessTheNework(final String message) throws IOException {
         if (randomGenerator.nextDouble() < failProbability) {
-            throw new IOException("Generic I/O error");
+            throw new NetworkException("Generic I/O error");
         }
     }
 

@@ -47,6 +47,18 @@ public final class UseArithmeticService {
          * This method should re-try to send message to the provided server, catching all IOExceptions,
          * until it succeeds.
          */
+
+        boolean sent = false;
+
+        //while (!sent) {
+            try {
+                server.sendData(message);
+                sent = true;
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        //}
+        
     }
 
     private static String retryReceiveOnNetworkError(final NetworkComponent server) {
@@ -54,11 +66,22 @@ public final class UseArithmeticService {
          * This method should re-try to retrieve information from the provided server, catching all IOExceptions,
          * until it succeeds.
          */
-        return null;
+        String data = null;
+
+        while (data == null) {
+            try {
+                data = server.receiveResponse();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        } 
+
+        return data;
     }
 
     private static void assertEqualsAsDouble(final String expected, final String actual) {
         final var message = ": expected " + expected + " and received " + actual;
+        System.out.println(message);
         if (Double.parseDouble(expected) == Double.parseDouble(actual)) {
             LOG.println("Success" + message);
         } else {
