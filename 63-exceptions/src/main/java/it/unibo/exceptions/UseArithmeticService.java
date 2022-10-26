@@ -50,14 +50,14 @@ public final class UseArithmeticService {
 
         boolean sent = false;
 
-        //while (!sent) {
+        while (!sent) {
             try {
                 server.sendData(message);
                 sent = true;
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                System.out.println("ERROR SEND " + e.getMessage());
             }
-        //}
+        }
         
     }
 
@@ -72,7 +72,7 @@ public final class UseArithmeticService {
             try {
                 data = server.receiveResponse();
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                System.out.println("ERROR RECEIVE " + e.getMessage());
             }
         } 
 
@@ -81,7 +81,6 @@ public final class UseArithmeticService {
 
     private static void assertEqualsAsDouble(final String expected, final String actual) {
         final var message = ": expected " + expected + " and received " + actual;
-        System.out.println(message);
         if (Double.parseDouble(expected) == Double.parseDouble(actual)) {
             LOG.println("Success" + message);
         } else {
