@@ -92,11 +92,6 @@ public final class ArithmeticService {
         } finally {
             commandQueue.clear();
         }
-        
-        /*
-         * The commandQueue should be cleared, no matter what, when the method exits
-         * But how?
-         */
     }
 
     private void computeAt(final int operatorIndex) {
