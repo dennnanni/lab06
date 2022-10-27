@@ -106,7 +106,7 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
             return new ArrayList<>();
         }
 
-        return this.groups.get(groupName);
+        return new ArrayList<>(this.groups.get(groupName));
     }
 
     @Override
