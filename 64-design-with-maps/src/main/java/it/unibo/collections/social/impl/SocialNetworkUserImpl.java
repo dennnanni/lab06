@@ -37,6 +37,9 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      * a generic-type Map:  think of what type of keys and values would best suit the requirements
      */
 
+    private static final int AGE_NOT_DEFINED = -1;
+    private final Map<String, Collection<U>> groups;
+
     /*
      * [CONSTRUCTORS]
      *
@@ -62,12 +65,18 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      *            application
      */
     public SocialNetworkUserImpl(final String name, final String surname, final String user, final int userAge) {
-        super(null, null, null, 0);
+        super(name, surname, user, userAge);
+
+        this.groups = new HashMap<>();
     }
 
     /*
      * 2) Define a further constructor where the age defaults to -1
      */
+
+    public SocialNetworkUserImpl(final String name, final String surname, final String user) {
+        this(name, surname, user, AGE_NOT_DEFINED);
+    }
 
     /*
      * [METHODS]
@@ -76,7 +85,14 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     @Override
     public boolean addFollowedUser(final String circle, final U user) {
-        return false;
+
+        if (!this.groups.keySet().contains(circle)) {
+            this.groups.put(circle, new ArrayList<>());
+        }
+
+        this.groups.get(circle).add(user);
+
+        return true;
     }
 
     /**
@@ -86,11 +102,22 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     @Override
     public Collection<U> getFollowedUsersInGroup(final String groupName) {
-        return null;
+        if (!this.groups.keySet().contains(groupName)) {
+            return new ArrayList<>();
+        }
+
+        return this.groups.get(groupName);
     }
 
     @Override
     public List<U> getFollowedUsers() {
-        return null;
+
+        List<U> followedList = new ArrayList<>();
+
+        for (Map.Entry<String, Collection<U>> entry : this.groups.entrySet()) {
+            followedList.addAll(entry.getValue());
+        }
+
+        return followedList;
     }
 }
