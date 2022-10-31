@@ -1,13 +1,14 @@
 package it.unibo.generics.graph;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 import it.unibo.generics.graph.api.Graph;
 
 public class GraphImpl<N> implements Graph<N> {
+
+    private final static int WHITE = 0;
+    private final static int GREY = 1;
+    private final static int BLACK = 2;
 
     private final List<N> nodes;
     private final List<Edge<N>> edges;
@@ -54,7 +55,25 @@ public class GraphImpl<N> implements Graph<N> {
     }
 
     public List<N> getPath(N source, N target) {
-        // TODO Auto-generated method stub
+        final List<N> queue = new LinkedList<>();
+        final Map<N, Integer> colors = new TreeMap<>();
+        boolean targetReached = false;
+
+        for (N n : this.nodes) {
+            colors.put(n, WHITE);
+        }
+        
+        queue.add(source);
+
+        while (!queue.isEmpty()) {
+            N node = queue.remove(0);
+
+            Set<N> linked = this.linkedNodes(node);
+            while (!linked.isEmpty()) {
+
+            }
+        }
+
         return null;
     }
     
