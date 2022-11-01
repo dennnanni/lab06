@@ -128,7 +128,7 @@ public final class UseListsAndMaps {
         long time = System.nanoTime();
 
         for (int i = 1; i <= ELEMS; i++) {
-            ls.set(0, i);
+            ls.add(0, i);
         }
 
         time = System.nanoTime() - time;
